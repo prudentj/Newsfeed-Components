@@ -85,10 +85,79 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Magnum Necronomica',
+    date: 'Jun 6th, 666 CE',
+    firstParagraph: `Clita delenit te vim. Mea et cibo melius pertinacia, pri in molestie deseruisse expetendis, eu dolores abhorreant eos.
+     Prompta accusam pro ad, ut mediocrem expetenda repudiandae nec, movet congue ne sit. Ius errem numquam pericula ad, mel at appetere
+      moderatius signiferumque, autem quidam vim ex. Adhuc erant veniam an ius. Corpora adipisci qui ad, ut vix elit mnesarchum?
+       Duis appellantur definitiones mel et.`,
+
+    secondParagraph: `At ridens vivendum vix, sit an paulo noster vocibus. Mel ne alia apeirian similique, ullum assentior voluptatum vel ad,
+     cu eos zril platonem complectitur. Eum in populo meliore copiosae, vocent argumentum an quo. Sumo brute sit in, per at appellantur complectitur.
+      Sit ad facer splendide, ex cibo justo mei?`,
+
+    thirdParagraph: `Apeirian phaedrum cu vim, id nam atqui admodum! Ei eum quodsi accusamus incorrupte, usu ea mucius docendi appellantur, ius
+     libris scaevola ne. Mei ad liber dicit adolescens. His dolores tacimates repudiandae ad, munere contentiones ut vix! At bonorum epicuri dissentiet nec,
+      equidem constituto neglegentur ut nec!`
   }
 ];
 
-/* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
+//This version of my function I am doing things one by one, so I can hammer down concepts before I
+//do it again to make my code clean and DRY
+function articleCreator(obj){
+  //making elements
+  const article =document.createElement('div');
+  const title = document.createElement('h2');
+  const date = document.createElement ('p');
+  const firstParagraph = document.createElement('p');
+  const secondParagraph = document.createElement ('p');
+  const thirdParagraph = document.createElement ('p');
+  const expandSpan = document.createElement ('span');
+  
+  //assigning elements text
+  title.textContent = obj.title;
+  date.textContent = obj.date;
+  firstParagraph.textContent = obj.firstParagraph;
+  secondParagraph.textContent = obj.secondParagraph;
+  thirdParagraph.textContent = obj.thirdParagraph;
+
+  //assigning classes
+  date.classList.add('date');
+  expandSpan.classList.add('expandButton');
+
+  //event listeners NEEED TO DO THIS
+  expandSpan.addEventListener('click',(event)=>{
+    console.log('Expand activated', event.target)
+    article.classList.toggle('article-open')
+  })
+  //est parent child relationships and returning
+  article.appendChild(title);
+  article.appendChild(date);
+  article.appendChild(firstParagraph);
+  article.appendChild(secondParagraph);
+  article.appendChild(thirdParagraph);
+  article.appendChild(expandSpan);
+  
+ 
+  return article;
+}
+
+let newComponents = data.map((el) => {
+    let newArticle = articleCreator(el);
+    return newArticle;
+  })
+// Element of dom to be used
+articles = document.querySelector('.articles');
+newComponents.forEach( component => {
+  articles.appendChild(component);
+})
+
+//articleCreator(data[0]);
+articleCreator(data[0])
+/* Step 1: Create a function that creates a component.
+ You will want your component to look like the template below: 
   
   <div class="article">
     <h2>{title of the article}</h2>
@@ -101,14 +170,18 @@ const data = [
 
   Hint: You will need to use createElement more than once here!
 
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
+  Your function should take either an object as it's one argument,
+   or 5 separate arguments mapping to each piece of the data object above.
 
-  Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
+  Step 2: Add an event listener to the expandButton span.
+   This event listener should toggle the class 'article-open' on the 'article' div.
 
   Step 3: return the entire component.
 
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+  Step 4: Map over the data, creating a component for each object
+   and add each component to the DOM as children of the 'articles' div.
 
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+  Step 5: Add a new article to the array. Make sure it is in the same
+   format as the others. Refresh the page to see the new article.
 
 */
